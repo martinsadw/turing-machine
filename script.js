@@ -1,6 +1,5 @@
 // console.log(document.getElementById("Q").value);
 
-// TODO(andre:2018-03-18): Utilizar git
 // TODO(andre:2018-03-18): Indexar trasições pelo caracter de leitura
 // TODO(andre:2018-03-18): Deslocar descrição da transição para cada ocorrencia
 // de um mesmo par de estados
@@ -168,7 +167,15 @@ function processWord(machine, word)
 
 setMachine(machine);
 
-console.log(processWord(machine, "aaaaab"));
-console.log(processWord(machine, "abababababab"));
-console.log(processWord(machine, "abbbbababababa"));
-console.log(processWord(machine, "b"));
+function log(message)
+{
+    var logDiv = document.getElementById("log")
+    var currentDate = new Date;
+    var dateString = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+    logDiv.textContent += dateString + ": " + message + "\n";
+}
+
+log("aaaaab - " + processWord(machine, "aaaaab"));
+log("abababababab - " + processWord(machine, "abababababab"));
+log("abbbbababababa - " + processWord(machine, "abbbbababababa"));
+log("b - " + processWord(machine, "b"));

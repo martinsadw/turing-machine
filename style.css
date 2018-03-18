@@ -68,3 +68,15 @@
     stroke: teal;
     stroke-width: 2;
 }
+
+#log {
+    position: fixed;
+    height: 200px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ddd;
+    padding: 8px;
+    overflow-y: scroll;
+    white-space: pre;
+}
