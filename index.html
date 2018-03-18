@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Turing Machine</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <!-- <div id="definition">
+            Q =      <input type="text" name="Q"     id="Q"     value="a"><br />
+            Gama =   <input type="text" name="Gama"  id="Gama"  value=""><br />
+            b =      <input type="text" name="b"     id="b"     value=""><br />
+            Sigma =  <input type="text" name="Sigma" id="Sigma" value=""><br />
+            q0 =     <input type="text" name="q0"    id="q0"    value=""><br />
+            F =      <input type="text" name="F"     id="F"     value=""><br />
+            delta =  <input type="text" name="delta" id="delta" value=""><br />
+        </div> -->
+        <div id="tape-region">
+            <div class="tape" id="tape-0">
+                <div class="tape-head"></div>
+                <span class="tape-symbol">A
+                </span><span class="tape-symbol">S
+                </span><span class="tape-symbol">D
+                </span><span class="tape-symbol">F
+                </span><span class="tape-symbol">G
+                </span>
+            </div>
+        </div>
+        <div id="states-region">
+            <svg class="state-connections">
+                <path id="test" d="M 80 30 L 170 30" stroke="red" />
+                <text text-anchor="middle" dy="-5" fill="red" font-size="12px">
+                    <textPath startOffset="50%" xlink:href="#test">
+                        (a, a, D)
+                    </textpath>
+                </text>
+                <!-- <line id="test" x1="80" y1="30" x2="170" y2="30"></line>
+                <text x="125" y="25" fill="red" text-anchor="middle" font-size="12px">
+                    <textPath xlink:href="#test">
+                        (a, a, D)
+                    <textpath>
+                </text> -->
+            </svg>
+            <div class="state" id="state-0" style="left: 60px; top: 10px;">0</div>
+            <div class="state" id="state-1" style="left: 150px; top: 10px;">1</div>
+        </div>
+        <script src="script.js" charset="utf-8"></script>
+    </body>
+</html>

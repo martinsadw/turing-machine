@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+}
+
+.tape {
+    position: relative;
+    height: 50px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+}
+
+.tape-symbol {
+    display: inline-block;
+    border: 1px solid black;
+    line-height: 48px;
+    height: 48px;
+    width: 30px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.tape-head {
+    position: absolute;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    width: 32px;
+    border: 2px solid red;
+    transition: .2s ease-in-out left;
+}
+
+.tape-head::after {
+    content: '';
+    display: block;
+    position: relative;
+    top: -12px;
+    left: -2px;
+    height: 10px;
+    border-top: 10px solid red;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+}
+
+#states-region {
+    position: relative;
+    background-color: #ddd;
+    height: 200px;
+}
+
+.state {
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    line-height: 40px;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 30%;
+}
+
+.state-connections {
+    width: 100%;
+    height: 100%;
+}
+.state-connections line {
+    stroke: teal;
+    stroke-width: 2;
+}

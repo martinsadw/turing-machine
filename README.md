@@ -1,1 +1,3 @@
-# turing-machine
+# Turing Machine
+
+Simulador de maquina de turing
