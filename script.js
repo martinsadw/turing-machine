@@ -1,6 +1,5 @@
 // console.log(document.getElementById("Q").value);
 
-// TODO(andre:2018-03-18): Indexar trasições pelo caracter de leitura
 // TODO(andre:2018-03-18): Deslocar descrição da transição para cada ocorrencia
 // de um mesmo par de estados
 // TODO(andre:2018-03-18): Inverter ordem de desenho da linha de transição para
@@ -17,28 +16,30 @@ var machine = [
         "x": 60,
         "y": 10,
         "transitions":
-        [
+        {
+            "a":
             {
                 "to": 1,
                 "read": "a",
                 "write": "a",
                 "move": "D"
             }
-        ]
+        }
     },
     {
         "final": false,
         "x": 150,
         "y": 10,
         "transitions":
-        [
+        {
+            "b":
             {
                 "to": 0,
                 "read": "b",
                 "write": "b",
                 "move": "D"
             }
-        ]
+        }
     }
 ];
 
@@ -64,7 +65,7 @@ function setMachine(machine)
     for (var i = 0; i < machine.length; ++i)
     {
         var state = machine[i];
-        var transitions = state.transitions;
+        var transitionsDict = state.transitions;
 
         var newState = document.createElement("div");
         newState.classList.add("state");
@@ -74,27 +75,10 @@ function setMachine(machine)
         newState.textContent = i;
         statesRegion.appendChild(newState);
 
-        for (var j = 0; j < transitions.length; ++j)
+        for (var transitionKey in transitionsDict)
         {
-            var endState = machine[transitions[j].to];
-
-            // var connectionLine = createSVGElement("line");
-            // connectionLine.setAttribute("x1", state.x + 20);
-            // connectionLine.setAttribute("y1", state.y + 20);
-            // connectionLine.setAttribute("x2", endState.x + 20);
-            // connectionLine.setAttribute("y2", endState.y + 20);
-            // svgConnections.appendChild(connectionLine);
-            //
-            // var lineMiddleX = (state.x + endState.x) / 2;
-            // var lineMiddleY = (state.y + endState.y) / 2;
-            // var connectionText = createSVGElement("text");
-            // connectionText.setAttribute("x", lineMiddleX + 20);
-            // connectionText.setAttribute("y", lineMiddleY + 20 - 0);
-            // connectionText.setAttribute("text-anchor", "middle");
-            // connectionText.setAttribute("alignment-baseline", "middle");
-            // connectionText.setAttribute("font-size", "12px");
-            // connectionText.textContent = "(" + transitions[j].read + ", " + transitions[j].write + ", " + transitions[j].move + ")";
-            // svgConnections.appendChild(connectionText);
+            var transition = transitionsDict[transitionKey];
+            var endState = machine[transition.to];
 
             var connectionLine = createSVGElement("path");
             connectionLine.setAttribute("id", "connection-" + connectionCount);
@@ -110,11 +94,9 @@ function setMachine(machine)
             svgConnections.appendChild(connectionText);
 
             var connectionTextPath = createSVGElement("textPath");
-            // connectionTextPath.setAttribute("x", lineMiddleX + 20);
-            // connectionTextPath.setAttribute("y", lineMiddleY + 20 - 0);
             connectionTextPath.setAttribute("startOffset", "50%");
             connectionTextPath.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "#connection-" + connectionCount);
-            connectionTextPath.textContent = "(" + transitions[j].read + ", " + transitions[j].write + ", " + transitions[j].move + ")";
+            connectionTextPath.textContent = "(" + transition.read + ", " + transition.write + ", " + transition.move + ")";
             connectionText.appendChild(connectionTextPath);
 
             connectionCount++;
@@ -130,35 +112,25 @@ function processWord(machine, word)
     for (;;)
     {
         var state = machine[currentState];
-        var transitions = state.transitions;
+        var transitionsDict = state.transitions;
 
-        // console.log(word[tapePosition]);
+        var transition = transitionsDict[word[tapePosition]];
 
-        var foundTransition = false;
-
-        for (var i = 0; i < transitions.length; ++i)
+        if (transition)
         {
-            // console.log("- " + transitions[i].read);
-            if (transitions[i].read == word[tapePosition])
+            word[tapePosition] = transition.write;
+            currentState = transition.to;
+            switch (transition.move)
             {
-                word[tapePosition] = transitions[i].write;
-                currentState = transitions[i].to;
-                switch (transitions[i].move)
-                {
-                    case "D":
-                        tapePosition++;
-                        break;
-                    case "E":
-                        tapePosition--;
-                        break;
-                }
-
-                foundTransition = true;
-                break;
+                case "D":
+                    tapePosition++;
+                    break;
+                case "E":
+                    tapePosition--;
+                    break;
             }
         }
-
-        if (!foundTransition)
+        else
         {
             return state.final;
         }
@@ -171,6 +143,7 @@ function log(message)
 {
     var logDiv = document.getElementById("log")
     var currentDate = new Date;
+    // TODO(andre:2018-03-18): Adicionar 0 caso o numero seja menor que 10
     var dateString = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
     logDiv.textContent += dateString + ": " + message + "\n";
 }
